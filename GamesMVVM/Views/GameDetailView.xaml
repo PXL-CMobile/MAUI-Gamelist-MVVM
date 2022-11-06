@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GamesMVVM.Views.GameDetailView"
+             Title="GameDetailView">
+    <VerticalStackLayout>
+        <Entry 
+            WidthRequest="150"
+            Text="{Binding Title}"
+            Placeholder="Title of the game"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            />
+        <Entry 
+            WidthRequest="150"
+            Text="{Binding Genre}"
+            Placeholder="Genre of the game"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry 
+            WidthRequest="150"
+            Text="{Binding Score}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Button Text="Save!" Command="{Binding SaveGameCommand}"></Button>
+    </VerticalStackLayout>
+</ContentPage>

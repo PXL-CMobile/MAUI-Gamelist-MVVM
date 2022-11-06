@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GamesMVVM.Views.GameListView"
+             xmlns:models="clr-namespace:GamesMVVM.Models"
+             xmlns:viewmodels="clr-namespace:GamesMVVM.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="GameListView"
+             x:DataType="viewmodels:GameListViewModel">
+    <ContentPage.Behaviors>
+        <!-- Using the community toolkit to couple the Appearing event to a Command! -->
+        <toolkit:EventToCommandBehavior
+                EventName="Appearing"
+                Command="{Binding LoadGamesCommand}" />
+    </ContentPage.Behaviors>
+    
+    <VerticalStackLayout>
+        <CollectionView ItemsSource="{Binding AllGames}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Game">
+                    <Border Stroke="#C49B33"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 40,0,0,40"
+                        Background="#2B0B98"
+                        Padding="16,8"
+                        HorizontalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <!--We need to use the AncestorType because the BindingContext on this location
+                                is a Game and not the ViewModel! 
+                            -->
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:GameListViewModel}}, Path=GoToDetailCommand}"
+                                CommandParameter="{Binding .}"
+                                ></TapGestureRecognizer>
+                        </Border.GestureRecognizers>
+                        <Label Text="{Binding Title}" TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"> </Label>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <!--We can just use the command because the BindingContext of the page (the viewmodel) will be used-->
+        <Button Text="Add a new Game" Command="{Binding AddGameCommand}"></Button>
+        <Button Text="Load Games" Command="{Binding LoadGamesCommand}"></Button>
+    </VerticalStackLayout>
+</ContentPage>
