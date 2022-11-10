@@ -2,6 +2,7 @@
 using GamesMVVM.ViewModels;
 using GamesMVVM.Views;
 using CommunityToolkit.Maui;
+using GamesMVVM.Repositories;
 
 namespace GamesMVVM;
 
@@ -22,6 +23,7 @@ public static class MauiProgram
 		/* Using the Community Toolkit */
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 
+        builder.Services.AddSingleton<GamesSQLiteRepository>();
         builder.Services.AddSingleton<GameService>();
 		builder.Services.AddTransient<GameDetailViewModel>();
 		builder.Services.AddSingleton<GameListViewModel>();

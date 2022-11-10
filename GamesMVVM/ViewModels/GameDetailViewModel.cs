@@ -44,6 +44,7 @@ namespace GamesMVVM.ViewModels
             videoGame.Title = Title;
             videoGame.Genre = Genre;
             videoGame.Score = Score;
+            gameService.SaveGame(videoGame);
             await Shell.Current.GoToAsync("..");
         }
     }

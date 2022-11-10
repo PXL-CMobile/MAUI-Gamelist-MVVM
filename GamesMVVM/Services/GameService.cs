@@ -1,4 +1,5 @@
 ﻿using GamesMVVM.Models;
+using GamesMVVM.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,27 +11,32 @@ namespace GamesMVVM.Services
 {
     public class GameService
     {
-        /* TODO: do database stuff here */
+        private GamesSQLiteRepository gamesRepo; 
+        // You could still use this to cache the list.
+        // private List<Game> allGames;
 
-        private List<Game> allGames;
-
-        public GameService()
+        public GameService(GamesSQLiteRepository repo)
         {
+            gamesRepo = repo;
             
-            allGames = new List<Game>();
-            
-            allGames.Add(new Game() { Title = "GTA5", Score = 94, Genre = "Shooter" });
-            allGames.Add(new Game() { Title = "Fifa2022", Score = 84, Genre = "Sports" }); 
+            //allGames = new List<Game>();
         }
 
-        public List<Game> GetAllGames()
+        public async Task<List<Game>> GetAllGames()
         {
-            return allGames;
+            //allGames = await gamesRepo.GetGamesAsync();
+            //return allGames;
+            return await gamesRepo.GetGamesAsync();
         }
 
-        public void AddGame(Game gameToAdd)
+        public async void AddGame(Game gameToAdd)
         {
-            allGames.Add(gameToAdd);
+            await gamesRepo.SaveGameAsync(gameToAdd);
+        }
+
+        public async void SaveGame(Game gameToAdd)
+        {
+            await gamesRepo.SaveGameAsync(gameToAdd);
         }
     }
 }

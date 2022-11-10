@@ -23,8 +23,8 @@ namespace GamesMVVM.ViewModels
         }
 
         [RelayCommand]
-        public void LoadGames() {
-            var games = gameService.GetAllGames();
+        public async void LoadGames() {
+            var games = await gameService.GetAllGames();
             AllGames.Clear();
             
             foreach (var game in games)
@@ -33,13 +33,12 @@ namespace GamesMVVM.ViewModels
             }
         }
 
-
         [RelayCommand]
         public void AddGame()
         {
             Game newGame = new Game();
             newGame.Title = "New Game";
-            AllGames.Add(newGame);
+            AllGames.Add(newGame); // Not really necesarry the list will be refreshed with LoadGames when returning
             gameService.AddGame(newGame);
         }
 
