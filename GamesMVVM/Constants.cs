@@ -8,7 +8,7 @@ namespace GamesMVVM
 {
     public static class Constants
     {
-        public const string DatabaseFilename = "GameListDB.db3";
+        public const string DatabaseFilename = "DBPRO2B.db3";
 
         public const SQLite.SQLiteOpenFlags Flags =
             // open the database in read/write mode

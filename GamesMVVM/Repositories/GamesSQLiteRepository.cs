@@ -1,4 +1,7 @@
 ﻿using GamesMVVM.Models;
+using Newtonsoft.Json;
+
+using System.Net.Http.Json;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -9,12 +12,14 @@ using System.Threading.Tasks;
 
 namespace GamesMVVM.Repositories
 {
-    public class GamesSQLiteRepository
+    public class GamesSQLiteRepository : IGamesRepository
     {
         SQLiteAsyncConnection context;
 
+
         public GamesSQLiteRepository()
         {
+
         }
 
         async Task Init()
@@ -22,7 +27,7 @@ namespace GamesMVVM.Repositories
             if (context is not null)
                 return;
             // Optional step: setup a prefilled db
-            // SetupDBFile("PREDB.db3");
+            SetupDBFile("PREDB.db3");
             context = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
             await context.CreateTableAsync<Game>();
 
@@ -34,13 +39,18 @@ namespace GamesMVVM.Repositories
             return await context.Table<Game>().ToListAsync();
         }
 
-        public async Task<int> SaveGameAsync(Game itemToSave)
+        public async Task<Game> SaveGameAsync(Game itemToSave)
         {
             await Init();
-            if (itemToSave.ID != 0)
-                return await context.UpdateAsync(itemToSave);
+            if (itemToSave.ID != 0) {
+                await context.UpdateAsync(itemToSave);
+                return itemToSave;
+            }
             else
-                return await context.InsertAsync(itemToSave);
+            {
+                await context.InsertAsync(itemToSave);
+                return itemToSave;
+            }
         }
 
         /*
@@ -49,9 +59,8 @@ namespace GamesMVVM.Repositories
             the SQLite connnection. 
             In this code: seeks a folder DB in the Resources 
             the PREDB.db3 is a file containing a SQLite database and is marked 
-            as an emmbedded resource.
+            as an embedded resource.
          */
-        /*
         public void SetupDBFile(string filename)
         {
             var assembly = typeof(App).GetTypeInfo().Assembly;
@@ -66,6 +75,6 @@ namespace GamesMVVM.Repositories
                 fileStream.Close();
             }
         }
-        */
+
     }
 }

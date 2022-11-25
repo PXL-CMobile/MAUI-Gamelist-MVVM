@@ -23,7 +23,7 @@ public static class MauiProgram
 		/* Using the Community Toolkit */
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 
-        builder.Services.AddSingleton<GamesSQLiteRepository>();
+		builder.Services.AddSingleton < IGamesRepository, GamesAPIRepository>();
         builder.Services.AddSingleton<GameService>();
 		builder.Services.AddTransient<GameDetailViewModel>();
 		builder.Services.AddSingleton<GameListViewModel>();

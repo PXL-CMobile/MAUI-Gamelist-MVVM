@@ -11,11 +11,11 @@ namespace GamesMVVM.Services
 {
     public class GameService
     {
-        private GamesSQLiteRepository gamesRepo; 
+        private IGamesRepository gamesRepo; 
         // You could still use this to cache the list.
         // private List<Game> allGames;
 
-        public GameService(GamesSQLiteRepository repo)
+        public GameService(IGamesRepository repo)
         {
             gamesRepo = repo;
             
